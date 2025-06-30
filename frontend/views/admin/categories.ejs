@@ -1,0 +1,167 @@
+<div class="bg-gray-100 min-h-screen">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+        <div class="mb-8">
+            <h1 class="text-2xl font-semibold text-gray-900">Category Management</h1>
+            <p class="mt-1 text-sm text-gray-500">Manage product categories.</p>
+        </div>
+        
+        <!-- Admin Navigation -->
+        <div class="mb-8 border-b border-gray-200">
+            <nav class="flex space-x-8">
+                <a href="/admin/dashboard" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 px-1 py-4 text-sm font-medium border-b-2">
+                    Dashboard
+                </a>
+                <a href="/admin/products" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 px-1 py-4 text-sm font-medium border-b-2">
+                    Products
+                </a>
+                <a href="/admin/categories" class="border-primary text-primary px-1 py-4 text-sm font-medium border-b-2">
+                    Categories
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Add Category Form -->
+        <div class="mb-8 bg-white shadow overflow-hidden sm:rounded-md p-6">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">Add New Category</h2>
+            <form action="/admin/categories" method="POST">
+                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                    <div class="sm:col-span-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Category Name</label>
+                        <div class="mt-1">
+                            <input type="text" name="name" id="name" required class="shadow-sm focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    
+                    <div class="sm:col-span-6">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <div class="mt-1">
+                            <textarea id="description" name="description" rows="3" class="shadow-sm focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">Brief description of the category.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Create Category
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Categories List -->
+        <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Categories</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">A list of all the categories available in the system.</p>
+            </div>
+            <div class="border-t border-gray-200">
+                <ul role="list" class="divide-y divide-gray-200">
+                    <% if (categories && categories.length > 0) { %>
+                        <% categories.forEach(category => { %>
+                            <li>
+                                <div class="px-4 py-4 sm:px-6 flex items-center justify-between">
+                                    <div>
+                                        <h4 class="text-sm font-medium text-primary truncate"><%= category.name %></h4>
+                                        <% if (category.description) { %>
+                                            <p class="mt-1 text-sm text-gray-500"><%= category.description %></p>
+                                        <% } else { %>
+                                            <p class="mt-1 text-sm text-gray-400 italic">No description</p>
+                                        <% } %>
+                                    </div>
+                                    <div class="ml-2 flex-shrink-0 flex">
+                                        <!-- Edit Button - Opens modal -->
+                                        <button type="button" data-modal-open="edit-category-<%= category.id %>" class="mr-2 inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                            <svg class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                            </svg>
+                                            Edit
+                                        </button>
+                                        
+                                        <!-- Delete Button - Opens confirmation dialog -->
+                                        <button type="button" data-modal-open="delete-category-<%= category.id %>" class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                            <svg class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                            </svg>
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Edit Category Modal -->
+                                <div id="edit-category-<%= category.id %>" class="modal hidden fixed z-10 inset-0 overflow-y-auto">
+                                    <div class="modal-overlay flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                                        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                                            <div>
+                                                <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Category</h3>
+                                                <form action="/admin/categories/<%= category.id %>" method="POST" class="mt-5">
+                                                    <div class="mb-4">
+                                                        <label for="edit-name-<%= category.id %>" class="block text-sm font-medium text-gray-700">Category Name</label>
+                                                        <input type="text" name="name" id="edit-name-<%= category.id %>" class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" required value="<%= category.name %>">
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label for="edit-description-<%= category.id %>" class="block text-sm font-medium text-gray-700">Description</label>
+                                                        <textarea id="edit-description-<%= category.id %>" name="description" rows="3" class="mt-1 focus:ring-primary focus:border-primary block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"><%= category.description %></textarea>
+                                                    </div>
+                                                    <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                                                        <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:col-start-2 sm:text-sm">
+                                                            Save Changes
+                                                        </button>
+                                                        <button type="button" data-modal-close class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:col-start-1 sm:text-sm">
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Delete Category Modal -->
+                                <div id="delete-category-<%= category.id %>" class="modal hidden fixed z-10 inset-0 overflow-y-auto">
+                                    <div class="modal-overlay flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+                                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+                                        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                                            <div>
+                                                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                                                    <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                                                    </svg>
+                                                </div>
+                                                <div class="mt-3 text-center sm:mt-5">
+                                                    <h3 class="text-lg leading-6 font-medium text-gray-900">Delete Category</h3>
+                                                    <div class="mt-2">
+                                                        <p class="text-sm text-gray-500">
+                                                            Are you sure you want to delete the category "<%= category.name %>"? This action cannot be undone.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                                                <form action="/admin/categories/<%= category.id %>/delete" method="POST" class="sm:col-start-2">
+                                                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                                <button type="button" data-modal-close class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:col-start-1 sm:text-sm">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <% }); %>
+                    <% } else { %>
+                        <li class="px-4 py-5 sm:px-6 text-center text-gray-500">
+                            No categories found. Create your first category using the form above.
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 

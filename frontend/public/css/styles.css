@@ -1,0 +1,160 @@
+/* Custom styles to supplement Tailwind CSS */
+
+/* Agricultural color variables */
+:root {
+    --leaf-green: #16a34a;
+    --leaf-dark: #15803d;
+    --soil-brown: #78350f;
+    --harvest-gold: #fbbf24;
+    --sky-blue: #0ea5e9;
+    --clay-red: #b91c1c;
+}
+
+/* Add a transition effect to links */
+a {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--leaf-green);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--leaf-dark);
+}
+
+/* Additional form input focus styles */
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.2);
+}
+
+/* Product card hover effect */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: var(--leaf-green);
+}
+
+/* Add a leaf icon to product headings */
+.product-card h3::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-right: 0;
+    transition: width 0.2s ease, margin 0.2s ease;
+}
+
+.product-card:hover h3::before {
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2316a34a' viewBox='0 0 20 20'%3E%3Cpath d='M7.05 3.691c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.372 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.783.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.363-1.118L.98 9.483c-.784-.57-.381-1.81.587-1.81H5.03a1 1 0 00.95-.69L7.05 3.69z' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+}
+
+/* Custom loading spinner */
+.loading {
+    border: 4px solid rgba(22, 163, 74, 0.2);
+    border-top: 4px solid var(--leaf-green);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animate flash messages */
+.flash-message {
+    animation: slideDown 0.3s ease-out forwards;
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Custom badge styles */
+.status-badge {
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.625rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-available {
+    background-color: #dcfce7;
+    color: var(--leaf-dark);
+    border: 1px solid rgba(22, 163, 74, 0.3);
+}
+
+.status-sold {
+    background-color: #fee2e2;
+    color: var(--clay-red);
+    border: 1px solid rgba(185, 28, 28, 0.3);
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: var(--soil-brown);
+    border: 1px solid rgba(120, 53, 15, 0.3);
+}
+
+.status-completed {
+    background-color: #dbeafe;
+    color: var(--sky-blue);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.status-cancelled {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+/* Dashboard card styles */
+.dashboard-card {
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    border-top: 3px solid var(--leaf-green);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Agricultural background patterns */
+.bg-pattern-crops {
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 52 52'%3E%3Cpath fill='%2316a34a' fill-opacity='0.05' d='M0 17.83V0h17.83a3 3 0 0 1-5.66 2H5.9A5 5 0 0 1 2 5.9v6.27a3 3 0 0 1-2 5.66zm0 18.34a3 3 0 0 1 2 5.66v6.27A5 5 0 0 1 5.9 52h6.27a3 3 0 0 1 5.66 0H0V36.17zM36.17 52a3 3 0 0 1 5.66 0h6.27a5 5 0 0 1 3.9-3.9v-6.27a3 3 0 0 1 0-5.66V52H36.17zM52 36.17a3 3 0 0 1 0-5.66V5.9A5 5 0 0 1 48.1 2h-6.27a3 3 0 0 1-5.66-2H52v36.17z'/%3E%3C/svg%3E");
+} 

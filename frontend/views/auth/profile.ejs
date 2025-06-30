@@ -1,0 +1,92 @@
+<%- include('../layouts/main', { title: 'My Profile' }) %>
+
+<div class="bg-gray-100 min-h-screen py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">My Profile</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and contact information.</p>
+            </div>
+            
+            <div class="border-t border-gray-200">
+                <dl>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Full name</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= user.name %></dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Email address</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= user.email %></dd>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Account type</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %>
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">Phone number</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            <% if (user.phone_number) { %>
+                                <%= user.phone_number %>
+                            <% } else { %>
+                                <span class="text-gray-500">Not provided</span>
+                            <% } %>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+            
+            <!-- Update Phone Number Form -->
+            <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                <h4 class="text-md leading-6 font-medium text-gray-900 mb-4">Update Phone Number</h4>
+                <form action="/auth/update-phone" method="POST">
+                    <div class="max-w-lg">
+                        <div class="mt-1 relative rounded-md shadow-sm">
+                            <input type="tel" name="phoneNumber" id="phoneNumber" 
+                                   class="focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md" 
+                                   placeholder="+254700000000" 
+                                   value="<%= user.phone_number || '' %>">
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">Enter with country code (e.g., +254 for Kenya)</p>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Update Phone Number
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Change Password Section -->
+            <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                <h4 class="text-md leading-6 font-medium text-gray-900 mb-4">Change Password</h4>
+                <form action="/auth/update-password" method="POST">
+                    <div class="space-y-4 max-w-lg">
+                        <div>
+                            <label for="currentPassword" class="block text-sm font-medium text-gray-700">Current Password</label>
+                            <div class="mt-1">
+                                <input type="password" name="currentPassword" id="currentPassword" required
+                                       class="focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="newPassword" class="block text-sm font-medium text-gray-700">New Password</label>
+                            <div class="mt-1">
+                                <input type="password" name="newPassword" id="newPassword" required
+                                       class="focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Change Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,193 @@
+<header class="bg-white shadow">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <nav class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" class="flex-shrink-0 text-2xl font-bold text-primary">
+                    Fresh<span class="text-accent">Link</span>
+                </a>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-center space-x-4">
+                    <a href="/" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Home</a>
+                    <a href="/marketplace" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Marketplace</a>
+                    <a href="/about" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">About</a>
+                    <a href="/services" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Services</a>
+                    <a href="/contact" class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary">Contact</a>
+                </div>
+            </div>
+            
+            <!-- User Menu -->
+            <div class="ml-4 flex items-center md:ml-6">
+                <% if (locals.user) { %>
+                    <!-- Dashboard Button -->
+                    <% if (user.role === 'admin') { %>
+                        <a href="/admin/dashboard" class="mr-4 px-3 py-1.5 text-sm font-medium text-white bg-primary hover:bg-primary-dark rounded-md">Dashboard</a>
+                    <% } else if (user.role === 'farmer') { %>
+                        <a href="/farmer/dashboard" class="mr-4 px-3 py-1.5 text-sm font-medium text-white bg-primary hover:bg-primary-dark rounded-md">Dashboard</a>
+                    <% } else if (user.role === 'vendor') { %>
+                        <a href="/vendor/dashboard" class="mr-4 px-3 py-1.5 text-sm font-medium text-white bg-primary hover:bg-primary-dark rounded-md">Dashboard</a>
+                    <% } %>
+                    
+                    <div class="relative ml-3">
+                        <div class="flex items-center">
+                            <button type="button" class="user-menu-button flex max-w-xs items-center rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" id="user-menu-button">
+                                <span class="sr-only">Open user menu</span>
+                                <span class="h-8 w-8 flex items-center justify-center text-white rounded-full">
+                                    <%= user.name.charAt(0).toUpperCase() %>
+                                </span>
+                            </button>
+                            <span class="ml-2 text-sm font-medium text-gray-700"><%= user.name %> (<%= user.role %>)</span>
+                        </div>
+                        
+                        <div class="user-menu hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" style="max-height: 300px; overflow-y: auto;">
+                            <!-- Admin Links -->
+                            <% if (user.role === 'admin') { %>
+                                <a href="/admin/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                                <a href="/admin/products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Products</a>
+                                <a href="/admin/categories" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Categories</a>
+                            <% } %>
+                            
+                            <!-- Farmer Links -->
+                            <% if (user.role === 'farmer') { %>
+                                <a href="/farmer/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                                <a href="/farmer/products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Products</a>
+                                <a href="/farmer/products/add" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add Product</a>
+                            <% } %>
+                            
+                                                <!-- Vendor Links -->
+                    <% if (user.role === 'vendor') { %>
+                        <a href="/vendor/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        <a href="/vendor/orders" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Orders</a>
+                    <% } %>
+                            
+                            <!-- Common Links -->
+                            <a href="/auth/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
+                            <a href="/auth/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign out</a>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <a href="/auth/login" class="inline-flex items-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark">
+                        Sign in
+                    </a>
+                    <a href="/auth/register" class="ml-3 inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-primary shadow-sm hover:bg-gray-50">
+                        Register
+                    </a>
+                <% } %>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <div class="-mr-2 flex md:hidden">
+                <button type="button" class="mobile-menu-button inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </div>
+    
+    <!-- Mobile menu, show/hide based on menu state -->
+    <div class="mobile-menu hidden md:hidden">
+        <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
+            <a href="/" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Home</a>
+            <a href="/marketplace" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Marketplace</a>
+            <a href="/about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">About</a>
+            <a href="/services" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Services</a>
+            <a href="/contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Contact</a>
+        </div>
+        
+        <% if (locals.user) { %>
+            <div class="border-t border-gray-200 pt-4 pb-3">
+                <div class="flex items-center px-5">
+                    <div class="flex-shrink-0">
+                        <span class="h-10 w-10 flex items-center justify-center text-white rounded-full bg-primary">
+                            <%= user.name.charAt(0).toUpperCase() %>
+                        </span>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-base font-medium text-gray-800"><%= user.name %></div>
+                        <div class="text-sm font-medium text-gray-500"><%= user.email %></div>
+                    </div>
+                </div>
+                <div class="mt-3 space-y-1 px-2">
+                    <!-- Admin Links (Mobile) -->
+                    <% if (user.role === 'admin') { %>
+                        <a href="/admin/dashboard" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Dashboard</a>
+                        <a href="/admin/products" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Products</a>
+                        <a href="/admin/categories" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Categories</a>
+                    <% } %>
+                    
+                    <!-- Farmer Links (Mobile) -->
+                    <% if (user.role === 'farmer') { %>
+                        <a href="/farmer/dashboard" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Dashboard</a>
+                        <a href="/farmer/products" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">My Products</a>
+                        <a href="/farmer/products/add" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Add Product</a>
+                    <% } %>
+                    
+                    <!-- Vendor Links (Mobile) -->
+                    <% if (user.role === 'vendor') { %>
+                        <a href="/vendor/dashboard" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Dashboard</a>
+                        <a href="/vendor/orders" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">My Orders</a>
+                    <% } %>
+                    
+                    <a href="/auth/profile" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">My Profile</a>
+                    <a href="/auth/logout" class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary">Sign out</a>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="border-t border-gray-200 pt-4 pb-3 px-5 flex space-x-4">
+                <a href="/auth/login" class="w-1/2 text-center inline-flex justify-center items-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-dark">
+                    Sign in
+                </a>
+                <a href="/auth/register" class="w-1/2 text-center inline-flex justify-center items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-primary shadow-sm hover:bg-gray-50">
+                    Register
+                </a>
+            </div>
+        <% } %>
+    </div>
+</header>
+
+<script>
+    // Toggle mobile menu
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Toggle user menu
+        const userMenuButton = document.querySelector('.user-menu-button');
+        const userMenu = document.querySelector('.user-menu');
+        
+        if (userMenuButton) {
+            userMenuButton.addEventListener('click', function(event) {
+                event.stopPropagation();
+                userMenu.classList.toggle('hidden');
+                
+                // Position the dropdown properly
+                const rect = userMenuButton.getBoundingClientRect();
+                userMenu.style.position = 'absolute';
+                userMenu.style.top = rect.bottom + 'px';
+                userMenu.style.zIndex = '50';
+            });
+            
+            // Keep menu open when clicking on the menu itself
+            userMenu.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+            
+            // Close user menu when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script> 
